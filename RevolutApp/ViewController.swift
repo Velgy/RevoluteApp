@@ -6,10 +6,14 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     var twoCountyCurrency: [Model] = []
+    var currecyObject: [CurrencyObject] = []
+    
+    private var token: NotificationToken?
    
     private var mainView: ViewVal {
         return view as! ViewVal
@@ -31,6 +35,33 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         mainView.collectionView.dataSource = self
         mainView.collectionView.delegate = self
         
+        //addRealm()
+        
+    }
+    
+    func addRealm() {
+        
+        do {
+            let realm = try Realm()
+            
+            let currencyObject = realm.objects(CurrencyObject.self)
+            
+            token = currencyObject.observe { (change) in
+                switch change {
+                case .initial(let objects):
+                    self.currecyObject = Array(objects)
+                    self.mainView.collectionView.reloadData()
+                case .update(let objects, deletions: _, insertions: _, modifications: _):
+                    self.currecyObject = Array(objects)
+                    self.mainView.collectionView.reloadData()
+                case .error(let error):
+                    print(error)
+                }
+            }
+            
+        } catch {
+            print(error)
+        }
     }
     
     @objc

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class Service {
 
@@ -38,7 +39,9 @@ class CountryViewController: UIViewController, UINavigationControllerDelegate {
     
     let service = Service()
     var countries: [String]? = []
+    
     var selectedCurrency: String?
+    
     weak var delegate: CountryViewControllerDelegate?
     
     var mainView: ViewCountry {

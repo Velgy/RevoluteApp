@@ -6,7 +6,7 @@ target 'RevolutApp' do
   use_frameworks!
 	pod 'Kingfisher', '~> 6.0'
 	pod 'SnapKit', '~> 5.0.0'
-
+	pod 'RealmSwift'
   # Pods for RevolutApp
 
 end

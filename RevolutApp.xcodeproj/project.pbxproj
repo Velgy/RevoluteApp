@@ -19,6 +19,7 @@
 		485445D325B719C300A46D40 /* ViewCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485445D225B719C300A46D40 /* ViewCountry.swift */; };
 		48855BCF25B88F9400C76E88 /* currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 48855BCE25B88F9400C76E88 /* currencies.json */; };
 		48855BD725BC909800C76E88 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48855BD625BC909800C76E88 /* Model.swift */; };
+		48C4ADC425D169EB003F46F3 /* CurrencyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C4ADC325D169EB003F46F3 /* CurrencyObject.swift */; };
 		80F5C7EEF6B526A6A6453C62 /* Pods_RevolutApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45EFC8D8EEDE957BB0E67ED /* Pods_RevolutApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		485445D225B719C300A46D40 /* ViewCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCountry.swift; sourceTree = "<group>"; };
 		48855BCE25B88F9400C76E88 /* currencies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currencies.json; sourceTree = "<group>"; };
 		48855BD625BC909800C76E88 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		48C4ADC325D169EB003F46F3 /* CurrencyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyObject.swift; sourceTree = "<group>"; };
 		4CCAAF541056B9EE2291DC1A /* Pods-RevolutApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevolutApp.debug.xcconfig"; path = "Target Support Files/Pods-RevolutApp/Pods-RevolutApp.debug.xcconfig"; sourceTree = "<group>"; };
 		B45EFC8D8EEDE957BB0E67ED /* Pods_RevolutApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RevolutApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE0BC792B27B5D98AFA923C6 /* Pods-RevolutApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevolutApp.release.xcconfig"; path = "Target Support Files/Pods-RevolutApp/Pods-RevolutApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -79,9 +81,10 @@
 				4834DD7F25B707B300553809 /* SceneDelegate.swift */,
 				4834DD9225B70A5B00553809 /* ViewValute.swift */,
 				4834DD8125B707B300553809 /* ViewController.swift */,
-				48855BD625BC909800C76E88 /* Model.swift */,
 				485445CF25B7192900A46D40 /* CollectionCountry.swift */,
 				485445D225B719C300A46D40 /* ViewCountry.swift */,
+				48C4ADC325D169EB003F46F3 /* CurrencyObject.swift */,
+				48855BD625BC909800C76E88 /* Model.swift */,
 				4808F88425C6F60B00939DF4 /* CoreData.xcdatamodeld */,
 				4834DD8625B707B600553809 /* Assets.xcassets */,
 				4834DD8825B707B600553809 /* LaunchScreen.storyboard */,
@@ -229,6 +232,7 @@
 				4834DD8225B707B300553809 /* ViewController.swift in Sources */,
 				4834DD7E25B707B300553809 /* AppDelegate.swift in Sources */,
 				4834DD8025B707B300553809 /* SceneDelegate.swift in Sources */,
+				48C4ADC425D169EB003F46F3 /* CurrencyObject.swift in Sources */,
 				4834DD9325B70A5C00553809 /* ViewValute.swift in Sources */,
 				485445D325B719C300A46D40 /* ViewCountry.swift in Sources */,
 				48855BD725BC909800C76E88 /* Model.swift in Sources */,
