@@ -10,7 +10,6 @@ import UIKit
 class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     var twoCountyCurrency: [Model] = []
-    var currecyObject: [CurrencyObject] = []
    
     private var mainView: ViewVal {
         return view as! ViewVal
@@ -33,6 +32,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         mainView.collectionView.delegate = self
         
     }
+    
     
     
     
