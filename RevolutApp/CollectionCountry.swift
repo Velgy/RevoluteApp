@@ -7,33 +7,13 @@
 
 import Foundation
 import UIKit
-import RealmSwift
-
-class Service {
-
-    func loadJson(fileName: String) -> [String]? {
-        let decoder = JSONDecoder()
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: "json")
-        else {
-            return nil
-        }
-            do {
-                let data = try Data(contentsOf: url)
-                    let country = try decoder.decode([String].self, from: data)
-                return country
-                
-            } catch {
-                print(error)
-            }
-        return nil
-    }
-}
 
 protocol CountryViewControllerDelegate: class {
     
     func countryViewController (_ viewController: CountryViewController, firstSelectedCountry name: String, secondSeltctedCountry name1: String)
     
 }
+
 
 class CountryViewController: UIViewController, UINavigationControllerDelegate {
     

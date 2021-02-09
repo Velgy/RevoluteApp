@@ -6,14 +6,11 @@
 //
 
 import UIKit
-import RealmSwift
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     var twoCountyCurrency: [Model] = []
     var currecyObject: [CurrencyObject] = []
-    
-    private var token: NotificationToken?
    
     private var mainView: ViewVal {
         return view as! ViewVal
@@ -35,34 +32,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         mainView.collectionView.dataSource = self
         mainView.collectionView.delegate = self
         
-        //addRealm()
-        
     }
     
-    func addRealm() {
-        
-        do {
-            let realm = try Realm()
-            
-            let currencyObject = realm.objects(CurrencyObject.self)
-            
-            token = currencyObject.observe { (change) in
-                switch change {
-                case .initial(let objects):
-                    self.currecyObject = Array(objects)
-                    self.mainView.collectionView.reloadData()
-                case .update(let objects, deletions: _, insertions: _, modifications: _):
-                    self.currecyObject = Array(objects)
-                    self.mainView.collectionView.reloadData()
-                case .error(let error):
-                    print(error)
-                }
-            }
-            
-        } catch {
-            print(error)
-        }
-    }
+    
     
     @objc
     func pressButtonPlus() {
@@ -87,8 +59,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
 extension ViewController: CountryViewControllerDelegate {
     
     func countryViewController(_ viewController: CountryViewController, firstSelectedCountry name: String, secondSeltctedCountry name1: String) {
-        var model = Model(firstCountry: name, secondCountry: name1, course: 1.0)
-        twoCountyCurrency.insert(model, at: 0)
+        
         mainView.collectionView.reloadData()
         
         let url = URL(string: "https://europe-west1-revolut-230009.cloudfunctions.net/revolut-ios?pairs=\(name + name1)")!
@@ -99,8 +70,8 @@ extension ViewController: CountryViewControllerDelegate {
                     let dictionary: [String: Double] = try decoder.decode([String: Double].self, from: data)
                     print(dictionary)
                     DispatchQueue.main.async {
-                        model = Model(firstCountry: name, secondCountry: name1, course: dictionary[name + name1] ?? 3.0)
-                        self.twoCountyCurrency = [model]
+                        let model = Model(firstCountry: name, secondCountry: name1, course: dictionary[name + name1] ?? 0.0)
+                        self.twoCountyCurrency.insert(model, at: 0)
                         self.mainView.collectionView.reloadData()
                     }
                 } catch {
@@ -162,7 +133,8 @@ extension ViewController: UICollectionViewDataSource {
         let amountText = NSMutableAttributedString.init(string: cell.secondName.text!)
         amountText.setAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
                                       NSAttributedString.Key.foregroundColor: UIColor.black],
-                                     range: NSMakeRange(0, 3))
+                                 range: NSMakeRange(0, amountText.length > 3 ? 4 : 3))
+        
         cell.secondName.attributedText = amountText
         
         cell.firstFullName.text = twoCountyCurrency[indexPath.item].firstFullName
