@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 protocol CountryViewControllerDelegate: class {
     
@@ -19,7 +20,7 @@ class CountryViewController: UIViewController, UINavigationControllerDelegate {
     
     let service = Service()
     var countries: [String]? = []
-    
+    let realm = try! Realm()
     var selectedCurrency: String?
     
     weak var delegate: CountryViewControllerDelegate?
@@ -94,6 +95,7 @@ extension CountryViewController: UICollectionViewDelegate {
             
             delegate?.countryViewController(self, firstSelectedCountry: selectedCurrency, secondSeltctedCountry: (countries?[indexPath.item])!)
             
+           
             dismiss(animated: true)
             
             

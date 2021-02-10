@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     var twoCountyCurrency: [Model] = []
-   
+    private var token: NotificationToken?
+    
     private var mainView: ViewVal {
         return view as! ViewVal
     }
@@ -30,11 +32,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         mainView.collectionView.register(HeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         mainView.collectionView.dataSource = self
         mainView.collectionView.delegate = self
+        updateCurrency()
         
     }
     
     
-    
+    func updateCurrency() {
+        do {
+            let realm = try Realm()
+            let twoCountyCurrency = realm.objects(Model.self)//.filter(<#NSPredicate#>)
+           
+            token = twoCountyCurrency.observe({ (change) in
+                switch change {
+                
+                case .initial(let objects):
+                    self.twoCountyCurrency = Array(objects)
+                    self.mainView.collectionView.reloadData()
+                case .update(let objects, deletions: _, insertions: _, modifications: _):
+                    self.twoCountyCurrency = Array(objects)
+                    self.mainView.collectionView.reloadData()
+                case .error(let error):
+                    print(error)
+                }
+            })
+            
+        } catch {
+            print(error)
+        }
+    }
     
     @objc
     func pressButtonPlus() {
@@ -53,7 +78,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         navigationVc.modalPresentationStyle = .fullScreen
         self.navigationController?.present(navigationVc, animated: true)
     }
-
+    
 }
 
 extension ViewController: CountryViewControllerDelegate {
@@ -61,6 +86,8 @@ extension ViewController: CountryViewControllerDelegate {
     func countryViewController(_ viewController: CountryViewController, firstSelectedCountry name: String, secondSeltctedCountry name1: String) {
         
         mainView.collectionView.reloadData()
+        
+        
         
         let url = URL(string: "https://europe-west1-revolut-230009.cloudfunctions.net/revolut-ios?pairs=\(name + name1)")!
         URLSession.shared.dataTask(with: url) { data, response, error in
@@ -71,8 +98,19 @@ extension ViewController: CountryViewControllerDelegate {
                     print(dictionary)
                     DispatchQueue.main.async {
                         let model = Model(firstCountry: name, secondCountry: name1, course: dictionary[name + name1] ?? 0.0)
-                        self.twoCountyCurrency.insert(model, at: 0)
-                        self.mainView.collectionView.reloadData()
+                        
+                        do {
+                            let realm = try Realm()
+                            
+                            try realm.write{
+                                realm.add(model, update: .all)
+                            }
+                        } catch {
+                            print("error")
+                        }
+//                        self.twoCountyCurrency.insert(model, at: 0)
+//
+//                        self.mainView.collectionView.reloadData()
                     }
                 } catch {
                     print(error)
@@ -120,7 +158,7 @@ extension ViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCellCountry
-        cell.firstName.text = "1 " + twoCountyCurrency[indexPath.item].firstCountry
+        cell.firstName.text = "1 " + twoCountyCurrency[indexPath.item].firstCountry 
         
         let myAttribute = [ NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20),
                             NSAttributedString.Key.foregroundColor: UIColor.black]
